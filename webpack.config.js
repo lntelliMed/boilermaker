@@ -18,9 +18,18 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         options: {
-          presets: ['react', 'env', 'stage-2']
+          presets: ['react', 'env', 'stage-2', 'es2015']
         }
+      },
+      // use the style-loader/css-loader combos for anything matching the .css extension
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
       }
+
     ]
   }
 };

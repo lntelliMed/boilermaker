@@ -5,12 +5,16 @@
   "main": "server.js",
   "scripts": {
     "start": "node index",
-    "start:dev": "webpack -w & nodemon server.js -e js,html --watch"
+    "start:dev": "webpack -w & nodemon start.js -e js,html --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.13.3",
+    "morgan": "^1.9.0",
+    "pg": "^6.4.2",
+    "pg-hstore": "^2.3.2",
     "react": "^16.2.0",
     "react-contenteditable": "^2.0.1",
     "react-dom": "^16.2.0",
@@ -18,7 +22,8 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "sequelize": "^4.28.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -26,7 +31,9 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.7",
     "nodemon": "^1.7.1",
+    "style-loader": "^0.19.1",
     "webpack": "^3.10.0"
   }
 }
