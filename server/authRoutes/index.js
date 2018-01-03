@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { User } = require('../db/models');
+const passport = require('passport');
 
 // curl http://localhost:3000/auth/login -H "Content-Type: application/json" -X POST -d '{"email": "zeke@zeke.zeke", "password": "123"}'
 router.post('/login', (req, res, next) => {
@@ -46,5 +47,13 @@ router.post('/logout', (req, res, next) => {
 router.get('/me', (req, res, next) => {
   res.json(req.user);
 });
+
+// Google authentication and login
+router.get('/google', passport.authenticate('google', { scope: 'email' }));
+
+router.get('/google/callback', passport.authenticate('google', {
+  successRedirect: '/',
+  failureRedirect: '/login' // or '/'
+}));
 
 module.exports = router;
