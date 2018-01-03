@@ -4,7 +4,8 @@ const path = require("path");
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const db = require('./db/_db.js');
+// const db = require('./db/_db.js');
+const {db, User} = require('./db/models');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
 
@@ -21,6 +22,21 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+passport.serializeUser((user, done) => {
+  try {
+    done(null, user.id);
+  } catch (err) {
+    done(err);
+  }
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id)
+    .then(user => done(null, user))
+    .catch(done);
+});
+
 
 // const PORT = 3000;
 
@@ -43,6 +59,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', require('./apiRoutes'));
+app.use('/auth', require('./authRoutes'));
 
 app.use(express.static(path.join(__dirname, '../public')))
 
