@@ -3,6 +3,24 @@ const app = express();
 const path = require("path");
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const db = require('./db/_db.js');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const passport = require('passport');
+
+
+const dbStore = new SequelizeStore({ db: db });
+dbStore.sync();
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'a wildly insecure secret',
+  store: dbStore,
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // const PORT = 3000;
 
